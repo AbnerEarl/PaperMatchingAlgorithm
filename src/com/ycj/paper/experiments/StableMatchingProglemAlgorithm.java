@@ -1,0 +1,91 @@
+package com.ycj.paper.experiments;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class StableMatchingProglemAlgorithm {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+	
+	/*
+	 * 4、稳定搭配算法Stable Matching Proglem（SMP for short）：DR用户优先原则，分别计算出每个DR用户对DS用户集合的一个偏好程度的排序集合RS，
+	 * 每个DR用户从它偏好的RS集合中选取第一个且没有匹配的DS用户进行匹配；DS用户优先原则，分别计算出每个DS用户对DR用户集合的一个偏好程度的排序集合SR，
+	 * 每个DS用户从它偏好的SR集合中选取第一个且没有匹配的DR用户进行匹配。
+	 * 
+	 * 
+	 */
+
+	
+	//在SMP算法中，DS用户优先的匹配算法
+	public static void DSPriorty(ArrayList<HashMap<String,String>> list_ds,ArrayList<HashMap<String,String>> list_dr,int index){
+		ArrayList<HashMap<String,String>> list_ds_original=list_ds;
+		ArrayList<HashMap<String,String>> list_dr_original=list_dr;
+		float dfferenceValue=0,drExpectValue=0,dsExpectValue=0;
+		for(int i=0;i<list_ds_original.size();i++){
+			float loveDegree=0;
+			int selectedDRTag=-1;
+			for(int j=0;j<list_dr_original.size();j++){
+				
+				float temLoveDegree=Tools.loveDegreeToDR(list_ds_original.get(i),list_dr_original.get(j));
+				if(temLoveDegree>loveDegree){
+					selectedDRTag=j;
+					loveDegree=temLoveDegree;
+				}
+				if(loveDegree>=1){
+					break;
+				}
+				
+			}
+			if(selectedDRTag!=-1){
+				dfferenceValue+=Tools.computeDifferenceValue(list_dr_original.get(selectedDRTag), list_ds_original.get(i));
+				drExpectValue+=Tools.computeDRExpectValue(list_dr_original.get(selectedDRTag), list_ds_original.get(i));
+				dsExpectValue+=Tools.computeDSExpectValue(list_dr_original.get(selectedDRTag),  list_ds_original.get(i));
+				list_dr_original.remove(selectedDRTag);
+			}
+		}
+		DataResult.fail_rate[index]+=list_dr_original.size()/(float)DataResult.DRNumber;
+		DataResult.dr_contary[index]+=drExpectValue;
+		DataResult.ds_contary[index]+=dsExpectValue;
+		DataResult.sum_contary[index]+=dfferenceValue;
+	}
+	
+	//在SMP算法中，DR用户优先的匹配算法
+	public static void DRPriorty(ArrayList<HashMap<String,String>> list_ds,ArrayList<HashMap<String,String>> list_dr,int index){
+		ArrayList<HashMap<String,String>> list_ds_original=list_ds;
+		ArrayList<HashMap<String,String>> list_dr_original=list_dr;
+		float dfferenceValue=0,drExpectValue=0,dsExpectValue=0;
+		int failTotal=0;
+		for(int i=0;i<list_dr_original.size();i++){
+			float loveDegree=0;
+			int selectedDSTag=-1;
+			for(int j=0;j<list_ds_original.size();j++){
+				
+				float temLoveDegree=Tools.loveDegreeToDS(list_ds_original.get(j),list_dr_original.get(i));
+				if(temLoveDegree>loveDegree){
+					selectedDSTag=j;
+					loveDegree=temLoveDegree;
+				}
+				if(loveDegree>=1){
+					break;
+				}
+				
+			}
+			if(selectedDSTag!=-1){
+				dfferenceValue+=Tools.computeDifferenceValue(list_dr_original.get(i), list_ds_original.get(selectedDSTag));
+				drExpectValue+=Tools.computeDRExpectValue(list_dr_original.get(i), list_ds_original.get(selectedDSTag));
+				dsExpectValue+=Tools.computeDSExpectValue(list_dr_original.get(i),  list_ds_original.get(selectedDSTag));
+				list_ds_original.remove(selectedDSTag);
+			}else{
+				failTotal++;
+			}
+		}
+		DataResult.fail_rate[index]+=failTotal/(float)DataResult.DRNumber;
+		DataResult.dr_contary[index]+=drExpectValue;
+		DataResult.ds_contary[index]+=dsExpectValue;
+		DataResult.sum_contary[index]+=dfferenceValue;
+	}
+	
+}
