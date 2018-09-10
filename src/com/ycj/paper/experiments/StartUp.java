@@ -61,6 +61,7 @@ public class StartUp {
 			RandomMatchingAlgorithm.DSPriorty(DataResult.list_ds_original_rm, DataResult.list_dr_original_rm, 4);
 			TwoEndsMatchingAlgorithm.DSPriorty(DataResult.list_ds_original_tem, DataResult.list_dr_original_tem, 5);
 			ManyToManyAlgorithm.DSPriorty(DataResult.list_ds_original_mtm, DataResult.list_dr_original_mtm, 6);
+			//OneToManyAlgorithm.DSPriorty(DataResult.list_ds_original_mtm, DataResult.list_dr_original_mtm, 6);
 			
 			//调用不同的算法，进行计算，DR用户优先原则
 			/*CommonAlgorithm.DRPriorty(DataResult.list_ds_original_common, DataResult.list_dr_original_common, 0);
@@ -80,7 +81,8 @@ public class StartUp {
 				Tools.saveRecord("第 "+(i+1)+" 次，算法 "+(k+1)+" 的累积失败率为："+DataResult.fail_rate[k]);
 				//System.out.println("第 "+i+" 次，算法 "+(k+1)+" 的累积差异值为："+DataResult.sum_contary[k]);
 				Tools.saveRecord("第 "+(i+1)+" 次，算法 "+(k+1)+" 的累积差异值为："+DataResult.sum_contary[k]);
-				
+				Tools.saveRecord("第 "+(i+1)+" 次，算法 "+(k+1)+" 的累积DR用户差异值为："+DataResult.dr_contary[k]);
+				Tools.saveRecord("第 "+(i+1)+" 次，算法 "+(k+1)+" 的累积DS用户差异值为："+DataResult.ds_contary[k]);
 			}
 			//System.out.println("==================================================================================\n\n\n");
 			Tools.saveRecord("==================================================================================\n\n\n");
@@ -116,12 +118,12 @@ public class StartUp {
 			
 			System.out.println("算法 "+(k+1)+" 的最终失败率为："+(DataResult.fail_rate[k]/(float)DataResult.CycleTimes));
 			Tools.saveRecord("算法 "+(k+1)+" 的最终失败率为："+(DataResult.fail_rate[k]/(float)DataResult.CycleTimes));
-			System.out.println("算法 "+(k+1)+" 的最终差异值为："+(DataResult.sum_contary[k]/(double)DataResult.CycleTimes));
-			Tools.saveRecord("算法 "+(k+1)+" 的最终差异值为："+(DataResult.sum_contary[k]/(double)DataResult.CycleTimes));
-			System.out.println("算法 "+(k+1)+" 的DR用户差异值为："+(DataResult.dr_contary[k]/(double)DataResult.CycleTimes));
-			Tools.saveRecord("算法 "+(k+1)+" 的DR用户差异值为："+(DataResult.dr_contary[k]/(double)DataResult.CycleTimes));
-			System.out.println("算法 "+(k+1)+" 的DS用户差异值为："+(DataResult.ds_contary[k]/(double)DataResult.CycleTimes));
-			Tools.saveRecord("算法 "+(k+1)+" 的DS用户差异值为："+(DataResult.ds_contary[k]/(double)DataResult.CycleTimes));
+			System.out.println("算法 "+(k+1)+" 的最终数据差值为："+(DataResult.sum_contary[k]/(double)DataResult.CycleTimes));
+			Tools.saveRecord("算法 "+(k+1)+" 的最终数据差值为："+(DataResult.sum_contary[k]/(double)DataResult.CycleTimes));
+			System.out.println("算法 "+(k+1)+" 的DR用户额外花费为："+(DataResult.dr_contary[k]/(double)DataResult.CycleTimes));
+			Tools.saveRecord("算法 "+(k+1)+" 的DR用户额外花费为："+(DataResult.dr_contary[k]/(double)DataResult.CycleTimes));
+			System.out.println("算法 "+(k+1)+" 的DS用户无用数据为："+(DataResult.ds_contary[k]/(double)DataResult.CycleTimes));
+			Tools.saveRecord("算法 "+(k+1)+" 的DS用户无用数据为："+(DataResult.ds_contary[k]/(double)DataResult.CycleTimes));
 		}
 		System.out.println("==================================================================================\n");
 		Tools.saveRecord("==================================================================================\n\n\n");

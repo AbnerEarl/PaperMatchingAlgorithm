@@ -42,9 +42,9 @@ public class DataResult {
 	 //DS用户差异值
 	 public static double []ds_contary=new double[7];
 	 //循环次数
-	 public static int CycleTimes=10;
+	 public static int CycleTimes=1000;
 	 //DR用户数量
-	 public static int DRNumber=20;
+	 public static int DRNumber=101;
 	 //DS用户数量
-	 public static int DSNumber=20;
+	 public static int DSNumber=101;
 }
