@@ -41,10 +41,16 @@ public class DataResult {
 	 public static double []dr_contary=new double[7];
 	 //DS用户差异值
 	 public static double []ds_contary=new double[7];
+	 //DR用户额外的花费率
+	 public static double []dr_costs=new double[7];
+	 //DS用户收益率
+	 public static double []ds_gains=new double[7];
 	 //循环次数
-	 public static int CycleTimes=1000;
+	 public static int CycleTimes=100;
 	 //DR用户数量
-	 public static int DRNumber=101;
+	 public static int DRNumber=0;
 	 //DS用户数量
-	 public static int DSNumber=101;
+	 public static int DSNumber=0;
+	 //记录文件名称
+	 public static String FileName="";
 }

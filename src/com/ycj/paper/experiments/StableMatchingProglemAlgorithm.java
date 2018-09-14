@@ -23,7 +23,8 @@ public class StableMatchingProglemAlgorithm {
 	public static void DSPriorty(ArrayList<HashMap<String,String>> list_ds,ArrayList<HashMap<String,String>> list_dr,int index){
 		ArrayList<HashMap<String,String>> list_ds_original=list_ds;
 		ArrayList<HashMap<String,String>> list_dr_original=list_dr;
-		float dfferenceValue=0,drExpectValue=0,dsExpectValue=0;
+		int successMatchUsers=0;
+		float dfferenceValue=0,drExpectValue=0,dsExpectValue=0,drCostsValue=0,dsGainsValue=0;
 		for(int i=0;i<list_ds_original.size();i++){
 			float loveDegree=0;
 			int selectedDRTag=-1;
@@ -40,15 +41,20 @@ public class StableMatchingProglemAlgorithm {
 				
 			}
 			if(selectedDRTag!=-1){
+				successMatchUsers++;
 				dfferenceValue+=Tools.computeDifferenceValue(list_dr_original.get(selectedDRTag), list_ds_original.get(i));
 				drExpectValue+=Tools.computeDRExpectValue(list_dr_original.get(selectedDRTag), list_ds_original.get(i));
 				dsExpectValue+=Tools.computeDSExpectValue(list_dr_original.get(selectedDRTag),  list_ds_original.get(i));
+				drCostsValue+=Tools.computeDRCostsValue(list_dr_original.get(selectedDRTag),  list_ds_original.get(i));
+				dsGainsValue+=Tools.computeDSGainsValue(list_dr_original.get(selectedDRTag),  list_ds_original.get(i));
 				list_dr_original.remove(selectedDRTag);
 			}
 		}
 		DataResult.fail_rate[index]+=list_dr_original.size()/(float)DataResult.DRNumber;
 		DataResult.dr_contary[index]+=drExpectValue;
 		DataResult.ds_contary[index]+=dsExpectValue;
+		DataResult.dr_costs[index]+=drCostsValue/(float)successMatchUsers;
+		DataResult.ds_gains[index]+=dsGainsValue/(float)successMatchUsers;
 		DataResult.sum_contary[index]+=dfferenceValue;
 	}
 	
@@ -56,7 +62,8 @@ public class StableMatchingProglemAlgorithm {
 	public static void DRPriorty(ArrayList<HashMap<String,String>> list_ds,ArrayList<HashMap<String,String>> list_dr,int index){
 		ArrayList<HashMap<String,String>> list_ds_original=list_ds;
 		ArrayList<HashMap<String,String>> list_dr_original=list_dr;
-		float dfferenceValue=0,drExpectValue=0,dsExpectValue=0;
+		int successMatchUsers=0;
+		float dfferenceValue=0,drExpectValue=0,dsExpectValue=0,drCostsValue=0,dsGainsValue=0;
 		int failTotal=0;
 		for(int i=0;i<list_dr_original.size();i++){
 			float loveDegree=0;
@@ -74,9 +81,12 @@ public class StableMatchingProglemAlgorithm {
 				
 			}
 			if(selectedDSTag!=-1){
+				successMatchUsers++;
 				dfferenceValue+=Tools.computeDifferenceValue(list_dr_original.get(i), list_ds_original.get(selectedDSTag));
 				drExpectValue+=Tools.computeDRExpectValue(list_dr_original.get(i), list_ds_original.get(selectedDSTag));
 				dsExpectValue+=Tools.computeDSExpectValue(list_dr_original.get(i),  list_ds_original.get(selectedDSTag));
+				drCostsValue+=Tools.computeDRCostsValue(list_dr_original.get(i),  list_ds_original.get(selectedDSTag));
+				dsGainsValue+=Tools.computeDSGainsValue(list_dr_original.get(i),  list_ds_original.get(selectedDSTag));
 				list_ds_original.remove(selectedDSTag);
 			}else{
 				failTotal++;
@@ -85,6 +95,8 @@ public class StableMatchingProglemAlgorithm {
 		DataResult.fail_rate[index]+=failTotal/(float)DataResult.DRNumber;
 		DataResult.dr_contary[index]+=drExpectValue;
 		DataResult.ds_contary[index]+=dsExpectValue;
+		DataResult.dr_costs[index]+=drCostsValue/(float)successMatchUsers;
+		DataResult.ds_gains[index]+=dsGainsValue/(float)successMatchUsers;
 		DataResult.sum_contary[index]+=dfferenceValue;
 	}
 	

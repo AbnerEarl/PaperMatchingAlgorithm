@@ -8,12 +8,21 @@ public class StartUp {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
+		for(int n=10;n<101;n=n+10){
+			
+			//动态指定记录过程的文件名称
+			DataResult.FileName="mtm"+n;
+			DataResult.DRNumber=n+1;
+			DataResult.DSNumber=51;
+			
 		//初始化变量
 		for(int k=0;k<DataResult.fail_rate.length;k++){
 			DataResult.fail_rate[k]=0;
 			DataResult.sum_contary[k]=0;
 			DataResult.dr_contary[k]=0;
 			DataResult.ds_contary[k]=0;
+			DataResult.dr_costs[k]=0;
+			DataResult.ds_gains[k]=0;
 		}
 		
 		
@@ -124,6 +133,10 @@ public class StartUp {
 			Tools.saveRecord("算法 "+(k+1)+" 的DR用户额外花费为："+(DataResult.dr_contary[k]/(double)DataResult.CycleTimes));
 			System.out.println("算法 "+(k+1)+" 的DS用户无用数据为："+(DataResult.ds_contary[k]/(double)DataResult.CycleTimes));
 			Tools.saveRecord("算法 "+(k+1)+" 的DS用户无用数据为："+(DataResult.ds_contary[k]/(double)DataResult.CycleTimes));
+			System.out.println("算法 "+(k+1)+" 的DR用户额外花费为："+(DataResult.dr_costs[k]/(double)DataResult.CycleTimes));
+			Tools.saveRecord("算法 "+(k+1)+" 的DR用户额外花费为："+(DataResult.dr_costs[k]/(double)DataResult.CycleTimes));
+			System.out.println("算法 "+(k+1)+" 的DS用户收益为："+(DataResult.ds_gains[k]/(double)DataResult.CycleTimes));
+			Tools.saveRecord("算法 "+(k+1)+" 的DS用户收益为："+(DataResult.ds_gains[k]/(double)DataResult.CycleTimes));
 		}
 		System.out.println("==================================================================================\n");
 		Tools.saveRecord("==================================================================================\n\n\n");
@@ -140,9 +153,14 @@ public class StartUp {
 			Tools.saveRecord(""+(DataResult.dr_contary[k]/(double)DataResult.CycleTimes));
 			System.out.println((DataResult.ds_contary[k]/(double)DataResult.CycleTimes));
 			Tools.saveRecord(""+(DataResult.ds_contary[k]/(double)DataResult.CycleTimes));
+			System.out.println((DataResult.dr_costs[k]/(double)DataResult.CycleTimes));
+			Tools.saveRecord(""+(DataResult.dr_costs[k]/(double)DataResult.CycleTimes));
+			System.out.println((DataResult.ds_gains[k]/(double)DataResult.CycleTimes));
+			Tools.saveRecord(""+(DataResult.ds_gains[k]/(double)DataResult.CycleTimes));
 		}
 		System.out.println("==================================================================================\n\n\n");
 		Tools.saveRecord("==================================================================================\n\n\n");
 	}
+}
 
 }

@@ -164,6 +164,33 @@ public class Tools {
 	    	
 	    }
 	    
+	  //计算DS用户期望的收益率
+	    public static float computeDSGainsValue(HashMap<String,String> dr,HashMap<String,String> ds){
+	    	HashMap<String,String> dr_local=dr;
+	    	HashMap<String,String> ds_local=ds;
+	    	float dr_flow=Float.parseFloat(dr_local.get("flow"));
+	    	float ds_flow=Float.parseFloat(ds_local.get("flow"));
+	    	if(dr_flow>=ds_flow){
+	    		return 1;
+	    	}else{
+	    		return dr_flow/ds_flow;
+	    	}
+	    	
+	    }
+	    
+	  //计算DR用户的额外花费率
+	    public static float computeDRCostsValue(HashMap<String,String> dr,HashMap<String,String> ds){
+	    	HashMap<String,String> dr_local=dr;
+	    	HashMap<String,String> ds_local=ds;
+	    	float dr_flow=Float.parseFloat(dr_local.get("flow"));
+	    	float ds_flow=Float.parseFloat(ds_local.get("flow"));
+	    	if(ds_flow>=dr_flow){
+	    		return 0;
+	    	}else{
+	    		return (dr_flow-ds_flow)/dr_flow;
+	    	}
+	    	
+	    }
 	    
 	    //DS用户对DR用户偏好程度的因子
 	    public static float loveDegreeToDR(HashMap<String,String> list_ds,HashMap<String,String> list_dr){
@@ -208,7 +235,7 @@ public class Tools {
 	    	FileWriter fw = null;
 	    	try {
 	    	//如果文件存在，则追加内容；如果文件不存在，则创建文件
-	    	File f=new File("D:\\PaperData.txt");
+	    	File f=new File("D:\\"+DataResult.FileName+".txt");
 	    	fw = new FileWriter(f, true);
 	    	} catch (IOException e) {
 	    	e.printStackTrace();
