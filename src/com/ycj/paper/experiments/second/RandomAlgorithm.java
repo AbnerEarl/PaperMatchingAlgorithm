@@ -1,20 +1,14 @@
-package com.ycj.paper.experiments;
+package com.ycj.paper.experiments.second;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-public class RandomMatchingAlgorithm {
+public class RandomAlgorithm {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-	
-	
 	/*
 	 * 
-	 * 5、随机匹配算法Random Matching （RM for short）：DR用户优先原则，一个DR用户随机的从DS集合中选择一个满足容忍时间的DS用户，
+	 * 随机匹配算法Random Matching （RM for short）：DR用户优先原则，一个DR用户随机的从DS集合中选择一个满足容忍时间的DS用户，
 	 * 与这个DS用户进行匹配；DS用户优先原则，一个DS用户随机的从DR集合中选择一个满足容忍时间的DR用户，与这个DR用户进行匹配。
 	 * 
 	 */
@@ -24,7 +18,9 @@ public class RandomMatchingAlgorithm {
 		ArrayList<HashMap<String,String>> list_ds_original=list_ds;
 		ArrayList<HashMap<String,String>> list_dr_original=list_dr;
 		Random random=new Random();
+		//统计匹配成功的用户
 		int successMatchUsers=0;
+		//定义差异值，DR和DS的期望值，花费率，收益率
 		float dfferenceValue=0,drExpectValue=0,dsExpectValue=0,drCostsValue=0,dsGainsValue=0;
 		for(int i=0;i<list_ds_original.size();i++){
 			ArrayList<HashMap<String,String>> SR=new ArrayList<>();
@@ -57,6 +53,7 @@ public class RandomMatchingAlgorithm {
 	public static void DRPriorty(ArrayList<HashMap<String,String>> list_ds,ArrayList<HashMap<String,String>> list_dr,int index){
 		ArrayList<HashMap<String,String>> list_ds_original=list_ds;
 		ArrayList<HashMap<String,String>> list_dr_original=list_dr;
+		//失败的DR用户数量
 		int failTotal=0;
 		int successMatchUsers=0;
 		Random random=new Random();

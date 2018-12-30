@@ -1,17 +1,13 @@
-package com.ycj.paper.experiments;
+package com.ycj.paper.experiments.second;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class StableMatchingProglemAlgorithm {
+public class SMPAlgorithm {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-	
 	/*
-	 * 4、稳定搭配算法Stable Matching Proglem（SMP for short）：DR用户优先原则，分别计算出每个DR用户对DS用户集合的一个偏好程度的排序集合RS，
+	 * 稳定搭配算法Stable Matching Proglem（SMP for short），稳定匹配分为弱稳定、一般稳定、强稳定，此处使用一般的稳定匹配：
+	 * DR用户优先原则，分别计算出每个DR用户对DS用户集合的一个偏好程度的排序集合RS，
 	 * 每个DR用户从它偏好的RS集合中选取第一个且没有匹配的DS用户进行匹配；DS用户优先原则，分别计算出每个DS用户对DR用户集合的一个偏好程度的排序集合SR，
 	 * 每个DS用户从它偏好的SR集合中选取第一个且没有匹配的DR用户进行匹配。
 	 * 
@@ -30,7 +26,7 @@ public class StableMatchingProglemAlgorithm {
 			int selectedDRTag=-1;
 			for(int j=0;j<list_dr_original.size();j++){
 				
-				float temLoveDegree=Tools.loveDegreeToDR(list_ds_original.get(i),list_dr_original.get(j));
+				float temLoveDegree=Tools.loveDegreeDRToDS(list_dr_original.get(j),list_ds_original.get(i));
 				if(temLoveDegree>loveDegree){
 					selectedDRTag=j;
 					loveDegree=temLoveDegree;
@@ -70,7 +66,7 @@ public class StableMatchingProglemAlgorithm {
 			int selectedDSTag=-1;
 			for(int j=0;j<list_ds_original.size();j++){
 				
-				float temLoveDegree=Tools.loveDegreeToDS(list_ds_original.get(j),list_dr_original.get(i));
+				float temLoveDegree=Tools.loveDegreeDSToDR(list_ds_original.get(j),list_dr_original.get(i));
 				if(temLoveDegree>loveDegree){
 					selectedDSTag=j;
 					loveDegree=temLoveDegree;
@@ -99,5 +95,4 @@ public class StableMatchingProglemAlgorithm {
 		DataResult.ds_gains[index]+=dsGainsValue/(float)successMatchUsers;
 		DataResult.sum_contary[index]+=dfferenceValue;
 	}
-	
 }
