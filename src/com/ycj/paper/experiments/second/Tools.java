@@ -227,6 +227,47 @@ public class Tools {
 	    }
 	    
 	    
+	    //根据集合和元素获取DS用户的偏好列表
+	    public static ArrayList<HashMap<String,String>> loveDegreeListForDS(HashMap<String,String> user,ArrayList<HashMap<String,String>> list){
+	    	ArrayList<HashMap<String,String>> result=new ArrayList<>();
+	    	ArrayList<HashMap<String,String>> origin_list=list;
+	    	while(origin_list.size()>0){
+	    		float loveDegree=loveDegreeDRToDS(origin_list.get(0), user);
+	    		int selectedTag=0;
+	    		for(int i=1;i<origin_list.size();i++){
+	    			float temLove=loveDegreeDRToDS(origin_list.get(i), user);
+	    			if(temLove>loveDegree){
+	    				loveDegree=temLove;
+	    				selectedTag=i;
+	    			}
+	    		}
+	    		result.add(origin_list.get(selectedTag));
+	    		origin_list.remove(selectedTag);
+	    	}
+	    	return result;
+	    }
+	    
+	  //根据集合和元素获取DR用户的偏好列表
+	    public static ArrayList<HashMap<String,String>> loveDegreeListForDR(HashMap<String,String> user,ArrayList<HashMap<String,String>> list){
+	    	ArrayList<HashMap<String,String>> result=new ArrayList<>();
+	    	ArrayList<HashMap<String,String>> origin_list=list;
+	    	while(origin_list.size()>0){
+	    		float loveDegree=loveDegreeDSToDR(origin_list.get(0), user);
+	    		int selectedTag=0;
+	    		for(int i=1;i<origin_list.size();i++){
+	    			float temLove=loveDegreeDSToDR(origin_list.get(i), user);
+	    			if(temLove>loveDegree){
+	    				loveDegree=temLove;
+	    				selectedTag=i;
+	    			}
+	    		}
+	    		result.add(origin_list.get(selectedTag));
+	    		origin_list.remove(selectedTag);
+	    	}
+	    	return result;
+	    }
+	    
+	    
 	    public static void saveRecord(String content) {
 	    	FileWriter fw = null;
 	    	try {

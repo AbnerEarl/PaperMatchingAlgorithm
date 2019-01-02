@@ -47,7 +47,7 @@ public class IAAlgorithm {
 		DataResult.sum_contary[index]+=dfferenceValue;
 	}
 	
-	//在普通算法中，DR用户优先的匹配算法
+	//在IA算法中，DR用户优先的匹配算法
 	public static void DRPriorty(ArrayList<HashMap<String,String>> list_ds,ArrayList<HashMap<String,String>> list_dr,int index){
 		ArrayList<HashMap<String,String>> list_ds_original=list_ds;
 		ArrayList<HashMap<String,String>> list_dr_original=list_dr;

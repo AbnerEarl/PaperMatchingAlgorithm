@@ -10,12 +10,12 @@ public class StartUp {
 		// TODO Auto-generated method stub
 
 
-		for(int n=10;n<31;n=n+10){
+		for(int n=10;n<11;n=n+10){
 			
 			//动态指定记录过程的文件名称
-			DataResult.FileName="mtm"+n;
-			DataResult.DRNumber=n;
-			DataResult.DSNumber=10;
+			DataResult.FileName="mtm"+5;
+			DataResult.DRNumber=5;
+			DataResult.DSNumber=5;
 			
 		//初始化变量
 		for(int k=0;k<DataResult.fail_rate.length;k++){
@@ -69,9 +69,11 @@ public class StartUp {
 			RandomAlgorithm.DSPriorty(DataResult.list_ds_original_smp, DataResult.list_dr_original_smp, 1);
 			SMPAlgorithm.DSPriorty(DataResult.list_ds_original_rm, DataResult.list_dr_original_rm, 2);
 			MTMAlgorithm.DSPriorty(DataResult.list_ds_original_mtm, DataResult.list_dr_original_mtm, 3);
+			HungarianAlgorithm.DSPriorty(DataResult.list_ds_original_semisort, DataResult.list_dr_original_semisort, 4);
 			
 			
 			//调用不同的算法，进行计算，DR用户优先原则
+			
 			
 			//运行一次，各个算法得到的结果
 			//System.out.println("====================================运行结果==========================================");
