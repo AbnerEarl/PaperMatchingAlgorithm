@@ -267,7 +267,15 @@ public class KMAlgorithm {
 			points[k]=Integer.parseInt(resultPoints[k]);
 		}
 		//得到最后一对匹配用户之间存在的数据差值
-		int differenceV=StoRWeight[points[points.length-2]][points[points.length-1]]-matchedPointSMaxW[points[points.length-2]];
+		int differenceV=matchedPointSMaxW[points[points.length-2]]-StoRWeight[points[points.length-2]][points[points.length-1]];
+		int temV=-1;
+		//选出增广路径中，两点差值最小的值
+		for(int j=0;j<points.length-1;j=j+2){
+			temV=matchedPointSMaxW[points[j]]-StoRWeight[points[j]][points[j+1]];
+			if(temV>=0&&temV<differenceV){
+				differenceV=temV;
+			}
+		}
 		//验证左右两边的点的权重之和与边的权重相等
 		for(int i=0;i<points.length-1;i=i+2){
 			//先加
