@@ -14,8 +14,8 @@ public class StartUp {
 			
 			//动态指定记录过程的文件名称
 			DataResult.FileName="mtm"+5;
-			DataResult.DRNumber=5;
-			DataResult.DSNumber=5;
+			DataResult.DRNumber=10;
+			DataResult.DSNumber=10;
 			
 		//初始化变量
 		for(int k=0;k<DataResult.fail_rate.length;k++){
@@ -70,7 +70,7 @@ public class StartUp {
 			SMPAlgorithm.DSPriorty(DataResult.list_ds_original_rm, DataResult.list_dr_original_rm, 2);
 			MTMAlgorithm.DSPriorty(DataResult.list_ds_original_mtm, DataResult.list_dr_original_mtm, 3);
 			HungarianAlgorithm.DSPriorty(DataResult.list_ds_original_semisort, DataResult.list_dr_original_semisort, 4);
-			
+			KMAlgorithm.DSPriorty(DataResult.list_ds_original_allsort, DataResult.list_dr_original_allsort, 5);
 			
 			//调用不同的算法，进行计算，DR用户优先原则
 			
