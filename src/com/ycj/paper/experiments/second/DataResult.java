@@ -46,7 +46,7 @@ public class DataResult {
 	 //DS用户的平均收益率
 	 public static double []ds_gains=new double[7];
 	 //循环次数
-	 public static int CycleTimes=1;
+	 public static int CycleTimes=100;
 	 //DR用户数量
 	 public static int DRNumber=0;
 	 //DS用户数量
