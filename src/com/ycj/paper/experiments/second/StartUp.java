@@ -71,7 +71,7 @@ public class StartUp {
 			MTMAlgorithm.DSPriorty(DataResult.list_ds_original_mtm, DataResult.list_dr_original_mtm, 3);
 			HungarianAlgorithm.DSPriorty(DataResult.list_ds_original_semisort, DataResult.list_dr_original_semisort, 4);
 			KMAlgorithm.DSPriorty(DataResult.list_ds_original_allsort, DataResult.list_dr_original_allsort, 5);
-			
+			KMImproveAlgorithm2.DSPriorty(DataResult.list_ds_original_tem, DataResult.list_dr_original_tem, 6);
 			//调用不同的算法，进行计算，DR用户优先原则
 			
 			

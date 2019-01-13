@@ -3,16 +3,8 @@ package com.ycj.paper.experiments.second;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class KMAlgorithm {
-
-	/**
-	 * KM算法C代码如下：
-	 * 
-	 * 
-	 */
-	
-
-	// 在Hu算法中，DS用户优先的匹配算法
+public class KMImproveAlgorithm {
+	// 在KM算法中，DS用户优先的匹配算法
 	//定义全局边的变量
 	// 1代表两点之间有边，且未匹配，2代表两点之间已经 匹配，0代表两点之间没有边
 	public static int[][] StoR;
@@ -93,11 +85,11 @@ public class KMAlgorithm {
 				center=left;
 				left--;
 			}
-			if (matchedPointS[k] == 0) {
+			if (matchedPointS[center] == 0) {
 				for (int l = 0; l < matchedPointR.length; l++) {
 					//MatchTimesTag=0;
 					//找到增广路径
-					String result=getMatchPath(k);
+					String result=getMatchPath(center);
 					if(matchSuccess){
 						System.out.println(result);
 						visiteResult(result);
@@ -238,16 +230,18 @@ public class KMAlgorithm {
 			
 			if (exixistDR!=-1&&matchedPointR[exixistDR] == 0) {
 				System.out.println("匹配过程："+result);
-				if(verifyResult(result)){
-					matchSuccess = true;
-					break;
-				}
-				
+				matchSuccess = true;
+				break;
 			}
 			
 			if (startFind) {
 				startFind = false;
-				exixistDR = findNotMatchPoint(StoR, exixistDS, matchedPointR.length);
+				if(matchedPointS[exixistDS]==0){
+					exixistDR=getDRPointNotMatchedMaxSide(exixistDS,matchedPointR.length);
+				}else{
+					
+				}
+				exixistDR = getDRPointNotMatchedMaxSide(exixistDS, matchedPointR.length);
 				result+=exixistDS+","+exixistDR+",";
 				//result+=exixistDS+",";
 				if (exixistDR != -1) {
@@ -260,7 +254,7 @@ public class KMAlgorithm {
 				}
 			} else {
 				startFind = true;
-				exixistDS = findHadMatchPoint(RtoS, exixistDR, matchedPointS.length);
+				exixistDS = getDSPointHadMatchedMaxSide(exixistDR, matchedPointS.length);
 				//result+=exixistDR+",";
 				if (exixistDS != -1) {
 					//修改访问标记
@@ -279,88 +273,9 @@ public class KMAlgorithm {
 		return result;
 	}
 	
-	private static boolean verifyResult(String result){
-		boolean isNotSuccess=false;
-		String []resultPoints=result.split(",");
-		int []points=new int[resultPoints.length];
-		for(int k=0;k<resultPoints.length;k++){
-			points[k]=Integer.parseInt(resultPoints[k]);
-		}
-		//得到最后一对匹配用户之间存在的数据差值
-		int differenceV=matchedPointSMaxW[points[points.length-2]]-StoRWeight[points[points.length-2]][points[points.length-1]];
-		int temV=-1;
-		//选出增广路径中，两点差值最小的值
-		for(int j=0;j<points.length-1;j=j+2){
-			temV=matchedPointSMaxW[points[j]]-StoRWeight[points[j]][points[j+1]];
-			if(temV>=0&&temV<differenceV){
-				differenceV=temV;
-			}
-		}
-		//验证左右两边的点的权重之和与边的权重相等
-		for(int i=0;i<points.length-1;i=i+2){
-			//先加
-			matchedPointSMaxW[i]-=differenceV;
-			matchedPointRMaxW[i+1]+=differenceV;
-			/*matchedPointSMaxW[i]-=1;
-			matchedPointRMaxW[i+1]+=1;*/
-		}
-		isNotSuccess=true;
-		return isNotSuccess;
-	}
 
-	// 找到未匹配的路径
-	/*private static int findNotMatchPoint(int[][] points, int startIndex, int allPoint) {
-		MatchTimesTag++;
-		int notMatchIndex = -1,DRpoint=-1;
-		boolean isNotExsit=false,decreaseWeight=false,increaseWeight=false;
-		if(MatchTimesTag>1000){
-			return -1;
-		}
-		for (int i = 0; i < allPoint; i++) {
-			if (points[startIndex][i] == 1) {
-				if(matchedPointSMaxW[startIndex]+matchedPointRMaxW[i]==StoRWeight[startIndex][i]&&StoRWeight[startIndex][i]>-999){
-					notMatchIndex = i;
-					break;
-				}else if(matchedPointSMaxW[startIndex]+matchedPointRMaxW[i]>StoRWeight[startIndex][i]&&matchedPointS[startIndex]==0){
-					//未匹配的点，且最大权值之和大于边的权重
-					matchedPointSMaxW[startIndex]--;
-					decreaseWeight=true;
-					break;
-				}else if(matchedPointSMaxW[startIndex]+matchedPointRMaxW[i]<StoRWeight[startIndex][i]&&matchedPointS[startIndex]==1){
-					//对于已经匹配的定点，左边进行了减法，右边应该进行加
-					increaseWeight=true;
-					int diffrentV=getDSPointMaxValueV(startIndex,allPoint)-matchedPointSMaxW[startIndex];
-					matchedPointRMaxW[i]+=diffrentV;
-					break;
-				}
-				else if(StoRWeight[startIndex][i]>-999){
-					DRpoint=i;
-					isNotExsit=true;
-				}
-				
-			}
-		}
-		//存在可以连接的边，但是冲突了，则进行左减右加操作，之后再进行匹配
-		if(decreaseWeight){
-			return findNotMatchPoint(points,startIndex,allPoint);	
-		}else if(increaseWeight){
-			return findNotMatchPoint(points,startIndex,allPoint);
-		}
-		else if(notMatchIndex==-1&&isNotExsit){
-			matchedPointSMaxW[startIndex]--;
-			matchedPointRMaxW[DRpoint]++;
-			return findNotMatchPoint(points,startIndex,allPoint);
-		}else{
-			return notMatchIndex;
-		}
-		
-	}
-*/
-	private static int findNotMatchPoint(int[][] points, int startIndex, int allPoint) {
-		int notMatchIndex = -1,DRpoint=-1;
-		
-		return getDRPointNotMatchedMaxSide(startIndex,allPoint);
-	}
+
+	
 
 	private static int getDSPointHadMatchedMaxValue(int startIndex,int length){
 		int maxV=-999,index=-1;
@@ -373,66 +288,39 @@ public class KMAlgorithm {
 		return maxV;
 	}
 	
+	
+	
 	private static int getDRPointNotMatchedMaxSide(int startIndex,int length){
 		int maxV=-999,index=-1;
 		for(int i=0;i<length;i++){
-			if(StoRWeight[startIndex][i]>maxV&&StoR[startIndex][i]==1){
+			if(StoRWeight[startIndex][i]>maxV&&StoR[startIndex][i]==1&&StoRWeight[startIndex][i]==matchedPointSMaxW[startIndex]+matchedPointRMaxW[i]){
 				maxV=StoRWeight[startIndex][i];
+				index=i;
+			}
+		}
+		if(matchedPointR[index]!=0){
+			int DSpoint=getDSPointHadMatchedMaxSide(index,matchedPointS.length);
+			if(StoRWeight[startIndex][index]>RtoSWeight[index][DSpoint]){
+				
+			}else{
+				//取第二大的边，并进行一次权值调整
+				
+			}
+		}
+		
+		return index;
+	}
+	
+	private static int getDSPointNotMatchedSecondValue(int startIndex,int length){
+		int maxV=-999,index=-1;
+		for(int i=0;i<length;i++){
+			if(RtoSWeight[startIndex][i]>maxV&&RtoS[startIndex][i]==2){
+				maxV=RtoSWeight[startIndex][i];
 				index=i;
 			}
 		}
 		return index;
 	}
-	
-	// 找到已匹配的路径
-	/*private static int findHadMatchPoint(int[][] points, int startIndex, int allPoint) {
-		int hadMatchIndex = -1,DSpoint=-1;
-		boolean isNotExsit=false,decreaseWeight=false;
-		if(MatchTimesTag>1000){
-			return -1;
-		}
-		for (int i = 0; i < allPoint; i++) {
-			if (points[startIndex][i] == 2) {
-				if(matchedPointRMaxW[startIndex]+matchedPointSMaxW[i]==RtoSWeight[startIndex][i]&&RtoSWeight[startIndex][i]>-999){
-					hadMatchIndex = i;
-					break;
-				}else if(matchedPointRMaxW[startIndex]+matchedPointSMaxW[i]>RtoSWeight[startIndex][i]&&RtoSWeight[startIndex][i]>-999){
-					//已经匹配的点，且最大权值之和大于边的权重
-					matchedPointSMaxW[i]--;
-					decreaseWeight=true;
-					break;
-				}
-				else if(RtoSWeight[startIndex][i]>-999){
-					DSpoint=i;
-					isNotExsit=true;
-				}
-				
-			}
-		}
-		
-		//存在可以连接的边，但是冲突了，则进行左减右加操作，之后再进行匹配
-		if (decreaseWeight) {
-			return findHadMatchPoint(points, startIndex, allPoint);
-		} else if (hadMatchIndex == -1 && isNotExsit) {
-			//matchedPointRMaxW[startIndex]++;
-			matchedPointSMaxW[DSpoint]--;
-			return findHadMatchPoint(points, startIndex, allPoint);
-		}else{
-			return hadMatchIndex;
-		}
-
-	
-	}*/
-	
-	
-	private static int findHadMatchPoint(int[][] points, int startIndex, int allPoint) {
-		int hadMatchIndex = -1,DSpoint=-1;
-		
-		return getDSPointHadMatchedMaxSide(startIndex,allPoint);
-		
-	
-	}
-	
 	
 	private static int getDSPointHadMatchedMaxSide(int startIndex,int length){
 		int maxV=-999,index=-1;
