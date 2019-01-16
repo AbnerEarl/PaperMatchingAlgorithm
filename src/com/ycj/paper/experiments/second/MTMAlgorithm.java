@@ -272,8 +272,10 @@ public class MTMAlgorithm {
 				DataResult.fail_rate[index]+=failTotal/(float)DataResult.DRNumber;
 				DataResult.dr_contary[index]+=drExpectValue;
 				DataResult.ds_contary[index]+=dsExpectValue;
+				if(successMatchUsers>0){
 				DataResult.dr_costs[index]+=drCostsValue/(float)successMatchUsers;
 				DataResult.ds_gains[index]+=dsGainsValue/(float)successMatchUsers;
+				}
 				DataResult.sum_contary[index]+=dfferenceValue;
 			}
 			

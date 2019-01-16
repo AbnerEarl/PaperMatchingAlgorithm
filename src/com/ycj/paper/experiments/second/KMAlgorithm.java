@@ -153,14 +153,14 @@ public class KMAlgorithm {
 			}
 		}
 		
-		//调用MTM算法，进行一次优化
-		//MTMAlgorithm.DSPriorty(ds_list, dr_list, index);
 		
 		DataResult.fail_rate[index]+=(DataResult.DRNumber-successMatchUsers)/(float)DataResult.DRNumber;
 		DataResult.dr_contary[index]+=drExpectValue;
 		DataResult.ds_contary[index]+=dsExpectValue;
-		DataResult.dr_costs[index]+=drCostsValue/(float)successMatchUsers;
-		DataResult.ds_gains[index]+=dsGainsValue/(float)successMatchUsers;
+		if(successMatchUsers>0){
+			DataResult.dr_costs[index]+=drCostsValue/(float)successMatchUsers;
+			DataResult.ds_gains[index]+=dsGainsValue/(float)successMatchUsers;
+		}
 		DataResult.sum_contary[index]+=dfferenceValue;
 
 	}
@@ -300,7 +300,9 @@ public class KMAlgorithm {
 		for(int i=0;i<points.length-1;i=i+2){
 			//先加
 			matchedPointSMaxW[i]-=differenceV;
+			if(i+1<points.length-1){
 			matchedPointRMaxW[i+1]+=differenceV;
+			}
 			/*matchedPointSMaxW[i]-=1;
 			matchedPointRMaxW[i+1]+=1;*/
 		}

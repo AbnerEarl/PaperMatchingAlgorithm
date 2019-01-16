@@ -13,6 +13,7 @@ public class StartUp {
 		for(int n=10;n<101;n=n+10){
 			
 			//动态指定记录过程的文件名称
+			//DataResult.FileName="otm"+n;
 			DataResult.FileName="mtm"+n;
 			DataResult.DRNumber=n;
 			DataResult.DSNumber=n;
@@ -69,6 +70,7 @@ public class StartUp {
 			RandomAlgorithm.DSPriorty(DataResult.list_ds_original_smp, DataResult.list_dr_original_smp, 1);
 			SMPAlgorithm.DSPriorty(DataResult.list_ds_original_rm, DataResult.list_dr_original_rm, 2);
 			MTMAlgorithm.DSPriorty(DataResult.list_ds_original_mtm, DataResult.list_dr_original_mtm, 3);
+			//OTMAlgorithm.DSPriorty(DataResult.list_ds_original_mtm, DataResult.list_dr_original_mtm, 3);
 			HungarianAlgorithm.DSPriorty(DataResult.list_ds_original_semisort, DataResult.list_dr_original_semisort, 4);
 			KMAlgorithm.DSPriorty(DataResult.list_ds_original_allsort, DataResult.list_dr_original_allsort, 5);
 			KMImproveAlgorithm2.DSPriorty(DataResult.list_ds_original_tem, DataResult.list_dr_original_tem, 6);
