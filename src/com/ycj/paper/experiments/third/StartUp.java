@@ -1,5 +1,6 @@
-package com.ycj.paper.experiments.second;
+package com.ycj.paper.experiments.third;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -8,15 +9,22 @@ public class StartUp {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
-
-		for(int n=1;n<11;n=n+1){
+		 DecimalFormat fnum  =   new  DecimalFormat("##0.00");
+		for(double v=0.5;v<=2.0;v=v+0.1){
 			
+			 String fv=fnum.format(v);
 			//动态指定记录过程的文件名称
-			DataResult.FileName="otm"+n;
+			DataResult.FileName="mtm_V_"+fv;
 			//DataResult.FileName="mtm"+n;
-			DataResult.DRNumber=n;
-			DataResult.DSNumber=1;
+			DataResult.V=Double.parseDouble(fv);
+			DataResult.F=50;
+			DataResult.f=50;
+			DataResult.t=50;
+			DataResult.DRNumber=50;
+			DataResult.DSNumber=50;
+			
+			
+			
 			
 		//初始化变量
 		for(int k=0;k<DataResult.fail_rate.length;k++){
@@ -69,8 +77,8 @@ public class StartUp {
 			IAAlgorithm.DSPriorty(DataResult.list_ds_original_common, DataResult.list_dr_original_common, 0);
 			RandomAlgorithm.DSPriorty(DataResult.list_ds_original_smp, DataResult.list_dr_original_smp, 1);
 			SMPAlgorithm.DSPriorty(DataResult.list_ds_original_rm, DataResult.list_dr_original_rm, 2);
-			//MTMAlgorithm.DSPriorty(DataResult.list_ds_original_mtm, DataResult.list_dr_original_mtm, 3);
-			OTMAlgorithm.DSPriorty(DataResult.list_ds_original_mtm, DataResult.list_dr_original_mtm, 3);
+			MTMAlgorithm.DSPriorty(DataResult.list_ds_original_mtm, DataResult.list_dr_original_mtm, 3);
+			//OTMAlgorithm.DSPriorty(DataResult.list_ds_original_mtm, DataResult.list_dr_original_mtm, 3);
 			HungarianAlgorithm.DSPriorty(DataResult.list_ds_original_semisort, DataResult.list_dr_original_semisort, 4);
 			KMAlgorithm.DSPriorty(DataResult.list_ds_original_allsort, DataResult.list_dr_original_allsort, 5);
 			KMImproveAlgorithm2.DSPriorty(DataResult.list_ds_original_tem, DataResult.list_dr_original_tem, 6);
